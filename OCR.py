@@ -10,6 +10,9 @@ import os
 os.environ['TESSDATA_PREFIX'] = r'C:\Program Files\Tesseract-OCR\tessdata'
 pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
 
+st.write("Tesseract path:", pytesseract.pytesseract.tesseract_cmd)
+st.write("Tesseract installed:", os.system("tesseract --version") == 0)
+
 # Title of the web app
 st.title("OCR Text Extraction and Search")
 
