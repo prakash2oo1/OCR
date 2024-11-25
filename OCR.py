@@ -7,9 +7,9 @@ import re
 import os
 from pytesseract import TesseractError
 
-# Configure Tesseract paths
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-os.environ['TESSDATA_PREFIX'] = r'C:\Program Files\Tesseract-OCR\tessdata'
+# Configure Tesseract paths for Linux
+pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
+os.environ['TESSDATA_PREFIX'] = '/usr/share/tesseract-ocr/4.00/'
 
 # Title of the web app
 st.title("OCR Text Extraction and Search")
