@@ -8,8 +8,11 @@ import os
 from pytesseract import TesseractError
 
 # Configure Tesseract paths
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-os.environ['TESSDATA_PREFIX'] = r'C:\Program Files\Tesseract-OCR\tessdata'
+try:
+    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+    os.environ['TESSDATA_PREFIX'] = r'C:\Program Files\Tesseract-OCR\tessdata'
+except Exception as e:
+    st.error(f"Error configuring Tesseract paths: {e}")
 
 # Title of the web app
 st.title("OCR Text Extraction and Search")
