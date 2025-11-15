@@ -1,18 +1,12 @@
 import streamlit as st
-import pytesseract
 import cv2
 import numpy as np
 from PIL import Image
 import re
-import os
-from pytesseract import TesseractError
+import easyocr
 
-# Configure Tesseract paths
-try:
-    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-    os.environ['TESSDATA_PREFIX'] = r'C:\Program Files\Tesseract-OCR\tessdata'
-except Exception as e:
-    st.error(f"Error configuring Tesseract paths: {e}")
+# Initialize EasyOCR Reader
+reader = easyocr.Reader(['en', 'hi'])
 
 # Title of the web app
 st.title("OCR Text Extraction and Search")
@@ -32,8 +26,9 @@ if uploaded_file is not None:
         image_array = np.array(image)
         gray = cv2.cvtColor(image_array, cv2.COLOR_BGR2GRAY)
 
-        # Use Tesseract to extract text
-        extracted_text = pytesseract.image_to_string(gray, lang='eng+hin')
+        # Use EasyOCR to extract text
+        result = reader.readtext(gray)
+        extracted_text = " ".join([text[1] for text in result])
 
         # Display the extracted text
         st.subheader("Extracted Text:")
@@ -49,8 +44,6 @@ if uploaded_file is not None:
             else:
                 st.warning(f"Keyword '{keyword}' not found.")
 
-    except TesseractError as e:
-        st.error(f"Tesseract OCR Error: {e}")
     except Exception as e:
         st.error(f"An unexpected error occurred: {e}")
 
